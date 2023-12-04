@@ -17,6 +17,7 @@ $superset = [];
 foreach ($lines as $line) {
     list($game, $plays) = explode(': ', $line);
     $game = preg_replace("/[^0-9]/", "", $game);
+    $superset[$game] = [];
 
     $plays = explode(';', $plays);
     foreach ($plays as $play) {
@@ -24,15 +25,15 @@ foreach ($lines as $line) {
 
         foreach ($blocks as $block) {
             list($count, $color) = explode(' ', $block);
-            if ($cubes[$color] < $count) {
-                $game = 'false';
+            if (!array_key_exists($color, $superset[$game])) {
+                $superset[$game][$color] = $count;
+            } elseif ($superset[$game][$color] < $count) {
+                $superset[$game][$color] = $count;
             }
         }
     }
 
-    if ($game !== 'false') {
-        $superset[] = $game;
-    }
+    $superset[$game] = array_product($superset[$game]);
 }
 
 d(array_sum($superset));
