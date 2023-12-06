@@ -21,7 +21,7 @@ d(calculateWays(
     [str_replace(' ', '', $lines[1])]
 ));
 
-function calculateWays($times, $distances): int {
+function calculateWays(array $times = [], array $distances = []): int {
     $count = 1;
 
     for ($i = 0; $i < count($times); $i++) {
