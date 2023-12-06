@@ -5,10 +5,10 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 $input = file_get_contents(__DIR__ . '/input.txt');
-$blocks = explode("\n\n", $input);
+$input = str_replace(['seeds:'], [''], $input); // adjust formatting for ease of use
+$blocks = explode("\n\n", trim($input));
 
-$seeds = array_map('intval', explode(" ", array_shift($blocks)));
-array_shift($seeds);
+$seeds = array_map('intval', explode(" ", trim(array_shift($blocks))));
 
 $mapped = array_map('mapBlocks', $blocks);
 
